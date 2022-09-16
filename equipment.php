@@ -1,8 +1,30 @@
 <?php
 
+
+
+/**Need to instantiate, superclasses fix capitals directories sub super sibling
+ *
+ * constant with table names?
+ * Geberic id or declare
+ * string|int <-only allowed php 8?
+ *
+ * __toString()
+ * __serialize __unserialize __debugInfo
+ *
+ * Autoloader
+ *
+ * Need abstract class
+ *
+ * Interface lab, check notes
+ *
+ * Fix camelcase namespace,
+ *
+ * Doug doesn't like getters and setters, most do
+*/
+
 namespace asset_module;
 
-class equipment
+class Equipment
 {
 
     public string $name;
@@ -17,6 +39,11 @@ class equipment
         $this->number = $number;
         $this->description = $description;
         $this->location = $location;
+    }
+
+    public function __toString(): string
+    {
+        return json_encode(get_object_vars($this));//NOTE: Can only access public properties
     }
 
     public function getName(): string
@@ -39,4 +66,9 @@ class equipment
         $this->number = $number;
     }
 
+
+
 }
+
+$test = new Equipment("test equipment", 1, "Here's a description", "Outside");
+echo $test;
