@@ -23,8 +23,8 @@ include DisplayAssembliesTrait::display();
 class Equipment extends Asset implements TestInterface
 {
     use DisplayAssembliesTrait, DisplayPartsTrait{
-        DisplayAssembliesTrait::display insteadof DisplayPartsTrait,
-        DisplayPartsTrait::display() as partsDisplay;
+        DisplayAssembliesTrait::display insteadof DisplayPartsTrait;
+        DisplayPartsTrait::display as partsDisplay;
     }
 
     CONST DATABASE = "icinga2";
