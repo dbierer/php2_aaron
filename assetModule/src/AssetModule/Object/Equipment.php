@@ -8,18 +8,10 @@
  *
  * __unserialize
  *
- * Autoloader
- *
- * Interface lab, check notes
  *
  */
 
 namespace AssetModule\Object;
-
-//include DisplayPartsTrait::display();
-//include DisplayAssembliesTrait::display();
-
-echo 'Equipment';
 
 class Equipment extends Asset implements TestInterface
 {
@@ -62,7 +54,7 @@ class Equipment extends Asset implements TestInterface
      */
     public function __toString(): string
     {
-        return ': ' . $this->name . ' ' . $this->number . ' ' . $this->description . "\n";
+        return $this->name . ' ' . $this->number . ' ' . $this->description . "\n";
     }
 
     /**
