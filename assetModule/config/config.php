@@ -6,9 +6,9 @@ $p = 'password';
 $db = 'icinga2';
 $con = pg_connect("host=$h dbname=$db user=$u password=$p") or die('Could not connect: ' . pg_last_error());
 
-/*Query and execution
- *
- * $findNumber = pg_query_params($con,
+/*Query and execution */
+
+$findNumber = pg_query_params($con,
     'SELECT icinga_equip.num,
         icinga_equip.sub_equip
             FROM icinga_statehistory 
@@ -20,16 +20,26 @@ $number = pg_fetch_row($findNumber);
 
 pg_query("BEGIN") or die("Could not start transaction\n");
 
-while ($number){
+$noRollBack = TRUE;
 
-pg_query_params($con,
-    'UPDATE icinga_equip SET state = $1 WHERE num = $2, array($_GET['state'] + 2, $number[0],));
-};
+while ($number) {
 
-pg_close($con);
+    $noRollBack = pg_query_params($con,
+        'UPDATE icinga_equip SET state = $1 WHERE num = $2', array($_GET['state'] + 2, $number[0],));
 
+    if (!$noRollBack) {
+        break;
+    }
 
-*/
+}
+
+    if($noRollBack) {
+        pg_query("COMMIT") or die("Transaction commit failed\n");
+        echo "Transaction committed\n";
+    } else {
+        pg_query("ROLLBACK") or die("Transaction rollback failed\n");
+        echo "Transaction rolled back\n";
+    }
 
 
 
