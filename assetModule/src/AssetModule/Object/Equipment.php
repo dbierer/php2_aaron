@@ -16,9 +16,10 @@
 
 namespace AssetModule\Object;
 
-include DisplayPartsTrait::display();
-include DisplayAssembliesTrait::display();
+//include DisplayPartsTrait::display();
+//include DisplayAssembliesTrait::display();
 
+echo 'Equipment';
 
 class Equipment extends Asset implements TestInterface
 {
@@ -48,6 +49,7 @@ class Equipment extends Asset implements TestInterface
         $this->number = $number;
         $this->description = $description;
         $this->location = $location;
+        $this->files = [];
     }
 
     public function displayBom(): void{
@@ -60,7 +62,7 @@ class Equipment extends Asset implements TestInterface
      */
     public function __toString(): string
     {
-        return $this->name . ' ' . $this->number . ' ' . $this->description . "\n";
+        return ': ' . $this->name . ' ' . $this->number . ' ' . $this->description . "\n";
     }
 
     /**
@@ -88,5 +90,3 @@ class Equipment extends Asset implements TestInterface
     }
 }
 
-$test = new Equipment("test equipment", 1, "Here's a description", "Outside");
-echo $test;
