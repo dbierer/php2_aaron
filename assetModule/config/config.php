@@ -17,6 +17,18 @@ $con = pg_connect("host=$h dbname=$db user=$u password=$p") or die('Could not co
             WHERE icinga_statehistory.statehistory_id = $1', array($_GET['state_id']));
 
 $number = pg_fetch_row($findNumber);
+
+pg_query("BEGIN") or die("Could not start transaction\n");
+
+while ($number){
+
+pg_query_params($con,
+    'UPDATE icinga_equip SET state = $1 WHERE num = $2, array($_GET['state'] + 2, $number[0],));
+};
+
+pg_close($con);
+
+
 */
 
 
