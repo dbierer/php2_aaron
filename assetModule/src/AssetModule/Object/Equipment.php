@@ -8,20 +8,20 @@
  *
  * __unserialize
  *
- * Autoloader
- *
- * Interface lab, check notes
  *
  */
 
-namespace assetModule\object;
-
-CONST DATABASE = "icinga2";
-CONST TABLE = "equipment";
+namespace AssetModule\Object;
 
 class Equipment extends Asset implements TestInterface
-
 {
+    use DisplayAssembliesTrait, DisplayPartsTrait{
+        DisplayAssembliesTrait::display insteadof DisplayPartsTrait;
+        DisplayPartsTrait::display as partsDisplay;
+    }
+
+    CONST DATABASE = "icinga2";
+    CONST TABLE = "equipment";
 
     public string $name;
     public int $number;
@@ -41,40 +41,12 @@ class Equipment extends Asset implements TestInterface
         $this->number = $number;
         $this->description = $description;
         $this->location = $location;
+        $this->files = [];
     }
 
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return int
-     */
-    public function getNumber(): int
-    {
-        return $this->number;
-    }
-
-    /**
-     * @param string $name
-     * @return void
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param int $number
-     * @return void
-     */
-    public function setNumber(int $number): void
-    {
-        $this->number = $number;
+    public function displayBom(): void{
+        $this->display();
+        $this->partsDisplay();
     }
 
     /**
@@ -90,6 +62,11 @@ class Equipment extends Asset implements TestInterface
      */
     public function __debugInfo(): array
     {
+        return $this->__serialize();
+    }
+
+    public function __serialize(): array
+    {
         return [
             'name' => $this->name,
             'number' => $this->number,
@@ -99,20 +76,9 @@ class Equipment extends Asset implements TestInterface
         ];
     }
 
-    public function __serialize(): string
-    {
-        /*return 'INSERT INTO ' . DATABASE . '.' . TABLE
-            . ' (name, number, description, location) VALUES ('
-            . $this->name . ', ' . $this->number . ', '
-            . $this->description . ', ' . $this->location . ')';*/
-        return 'Test';
-    }
-
     public function testFunction(): void
     {
         echo 'test';
     }
 }
 
-$test = new Equipment("test equipment", 1, "Here's a description", "Outside");
-echo $test;

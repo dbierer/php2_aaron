@@ -1,6 +1,6 @@
 <?php
 
-namespace assetModule\object;
+namespace AssetModule\Object;
 
 abstract class Asset
 {
