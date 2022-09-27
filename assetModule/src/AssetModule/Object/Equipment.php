@@ -11,6 +11,8 @@
  *
  */
 
+// NOTE: this namespace will only work in PHP 8 and above
+//       in PHP 7, "Object" will be viewed as a keyword and you'll get a syntax error!
 namespace AssetModule\Object;
 
 class Equipment extends Asset implements TestInterface
